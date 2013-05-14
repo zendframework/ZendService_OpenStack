@@ -1,0 +1,10 @@
+HTTP/1.1 202 Accepted
+Date: Fri, 26 Apr 2013 11:26:41 GMT
+Content-Length: 1234
+Location: https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13
+Content-Type: application/json
+X-Compute-Request-Id: req-dd6c6250-b13d-4f86-93ec-568965c23feb
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"server": {"status": "REBUILD", "updated": "2013-04-26T11:26:41Z", "hostId": "11111ff1598c0a13d159348d8b8d12396977de50cae7fe1b9ddb9dd3", "addresses": {"public": [{"version": 6, "addr": "2001:4800:7810:0512:1acd:02a8:ff04:3ed2"}, {"version": 4, "addr": "166.78.10.238"}], "private": [{"version": 4, "addr": "10.181.29.83"}]}, "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "bookmark"}], "image": {"id": "3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/817787/images/3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "rel": "bookmark"}]}, "flavor": {"id": "2", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/817787/flavors/2", "rel": "bookmark"}]}, "id": "5d417ee4-bc30-43d5-a95c-f27529ff6b13", "user_id": "342707", "name": "rebuildZF2test", "created": "2013-04-26T11:15:53Z", "tenant_id": "817787", "adminPass": "1234567890", "OS-DCF:diskConfig": "AUTO", "accessIPv4": "166.78.10.238", "accessIPv6": "2001:4800:7810:512:1acd:2a8:ff04:3ed2", "progress": 0, "metadata": {}}}

@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Server: nginx/0.8.55
+Date: Thu, 02 May 2013 12:26:02 GMT
+Content-Type: application/json
+Connection: close
+response-source: cloud-auth
+vary: Accept, Accept-Encoding, X-Auth-Token
+VIA: 1.0 Repose (Repose/2.3.5)
+Front-End-Https: on
+
+{"user":{"id":"111239","enabled":true,"username":"zf2testChanged","updated":"2013-05-02T07:25:55.000-05:00","created":"2013-05-02T07:25:55.000-05:00","email":"test@test.com","RAX-AUTH:defaultRegion":""}}

@@ -1,0 +1,21 @@
+{
+    "name": "zendframework/zendservice-openstack",
+    "description": "OOP wrapper for the OpenStack API",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "openstack"
+    ],
+    "homepage": "http://packages.zendframework.com/",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-0": {
+            "ZendService\\OpenStack\\": "library/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendservice-api": "dev-master",
+        "zendframework/zend-http": ">=2.1.4"
+    }
+}

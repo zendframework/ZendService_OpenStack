@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Fri, 26 Apr 2013 12:48:31 GMT
+Content-Length: 1415
+Content-Type: application/json
+X-Compute-Request-Id: req-56534143-f00c-4a80-885e-06cfe5538234
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"image": {"status": "ACTIVE", "updated": "2013-04-19T16:59:32Z", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/images/3afe97b2-1111-1111-a2cc-a2fc8d80c001", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/images/3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/images/3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "type": "application/vnd.openstack.image", "rel": "alternate"}], "OS-DCF:diskConfig": "AUTO", "id": "3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "OS-EXT-IMG-SIZE:size": 292637656, "name": "Ubuntu 11.10 (Oneiric Oncelot)", "created": "2012-02-28T19:38:57Z", "minDisk": 10, "progress": 100, "minRam": 256, "metadata": {"os_distro": "ubuntu", "com.rackspace__1__visible_core": "1", "com.rackspace__1__build_rackconnect": "1", "auto_disk_config": "True", "com.rackspace__1__options": "0", "image_type": "base", "org.openstack__1__os_version": "11.10", "org.openstack__1__os_distro": "org.ubuntu", "rax_managed": "false", "os_version": "11.10", "com.rackspace__1__release_version": "1", "rax_options": "0", "com.rackspace__1__visible_rackconnect": "1", "com.rackspace__1__release_id": "1002", "com.rackspace__1__visible_managed": "1", "com.rackspace__1__build_core": "1", "arch": "x86-64", "os_type": "linux", "org.openstack__1__architecture": "x64", "com.rackspace__1__build_managed": "1"}}}

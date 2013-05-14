@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Fri, 26 Apr 2013 11:16:00 GMT
+Content-Length: 924
+Content-Type: application/json
+X-Compute-Request-Id: req-4cf82892-f58b-4e4c-8750-66598770ef35
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"server": {"status": "BUILD", "updated": "2013-04-26T11:16:00Z", "hostId": "", "addresses": {}, "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-1111-1111-1111-f27529ff6b13", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "bookmark"}], "image": {"id": "3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/817787/images/3afe97b2-26dc-49c5-a2cc-a2fc8d80c001", "rel": "bookmark"}]}, "flavor": {"id": "2", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/817787/flavors/2", "rel": "bookmark"}]}, "id": "5d417ee4-bc30-43d5-a95c-f27529ff6b13", "user_id": "342707", "name": "newZF2test", "created": "2013-04-26T11:15:53Z", "tenant_id": "817787", "OS-DCF:diskConfig": "AUTO", "accessIPv4": "", "accessIPv6": "", "progress": 0, "metadata": {}}}

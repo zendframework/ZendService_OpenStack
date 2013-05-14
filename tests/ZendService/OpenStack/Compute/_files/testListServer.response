@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Fri, 26 Apr 2013 11:15:58 GMT
+Content-Length: 678
+Content-Type: application/json
+X-Compute-Request-Id: req-19780f1f-f226-4607-b013-eaa463619120
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"servers": [{"id": "11117ee4-bc30-1111-1111-f27529ff6b13", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "bookmark"}], "name": "testZF2"}, {"id": "4e83a23c-8267-4c4f-b943-3f46920e890c", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/4e83a23c-8267-4c4f-b943-3f46920e890c", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/servers/4e83a23c-8267-4c4f-b943-3f46920e890c", "rel": "bookmark"}], "name": "newZF2test"}]}

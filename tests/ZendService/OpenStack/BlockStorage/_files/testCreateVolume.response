@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+X-Compute-Request-Id: req-ebb5b6ef-afcc-4d01-8d00-5b1dddda6dfc
+Content-Type: application/json
+Content-Length: 15
+Date: Fri, 26 Apr 2013 15:13:09 GMT
+Connection: close
+
+{
+    "volume": {
+        "id": "6996b558-d633-4635-8116-adf14009fcc3",
+        "links": [
+        {
+            "href": "http://localhost:8776/v2/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/6996b558-d633-4635-8116-adf14009fcc3",
+            "rel": "self"
+        },
+        {
+            "href": "http://localhost:8776/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/6996b558-d633-4635-8116-adf14009fcc3",
+            "rel": "bookmark"
+        }
+        ],
+        "name": "vol-001"
+    }
+}

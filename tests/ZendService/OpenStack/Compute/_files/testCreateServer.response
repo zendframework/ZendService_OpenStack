@@ -1,0 +1,10 @@
+HTTP/1.1 202 Accepted
+Date: Fri, 26 Apr 2013 11:15:52 GMT
+Content-Length: 380
+Location: https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13
+Content-Type: application/json
+X-Compute-Request-Id: req-073ec842-d695-440d-a2f3-7426f17b1fa1
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"server": {"OS-DCF:diskConfig": "AUTO", "id": "11117ee4-bc30-1111-1111-f27529ff6b13", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13", "rel": "bookmark"}], "adminPass": "password"}}

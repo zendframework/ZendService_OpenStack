@@ -1,0 +1,7 @@
+HTTP/1.1 202 Accepted
+Date: Fri, 26 Apr 2013 11:26:36 GMT
+Content-Length: 0
+Content-Type: text/html;charset=UTF-8
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+

@@ -1,0 +1,7 @@
+HTTP/1.1 202 Accepted
+Date: Fri, 26 Apr 2013 11:26:41 GMT
+Location: https://dfw.servers.api.rackspacecloud.com/v2/817787/servers/5d417ee4-bc30-43d5-a95c-f27529ff6b13
+Content-Type: application/json
+X-Compute-Request-Id: req-dd6c6250-b13d-4f86-93ec-568965c23feb
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)

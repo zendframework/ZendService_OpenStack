@@ -1,0 +1,23 @@
+HTTP/1.1 202 OK
+X-Compute-Request-Id: req-ebb5b6ef-afcc-4d01-8d00-5b1dddda6dfc
+Content-Type: application/json
+Content-Length: 355
+Date: Fri, 26 Apr 2013 15:13:09 GMT
+Connection: close
+
+{
+"backup":{
+"id":"deac8b8c-35c9-4c71-acaa-889c2d5d5c8e",
+"links":[
+{
+"href":"http://localhost:8776/v2/c95fc3e4afe248a49a28828f286a7b38/backups/deac8b8c-35c9-4c71-acaa-889c2d5d5c8e",
+"rel":"self"
+},
+{
+"href":"http://localhost:8776/c95fc3e4afe248a49a28828f286a7b38/backups/deac8b8c-35c9-4c71-acaa-889c2d5d5c8e",
+"rel":"bookmark"
+}
+],
+"name":"backup001"
+}
+}

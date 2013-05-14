@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+X-Compute-Request-Id: req-ebb5b6ef-afcc-4d01-8d00-5b1dddda6dfc
+Content-Type: application/json
+Content-Length: 212
+Date: Fri, 26 Apr 2013 15:13:09 GMT
+Connection: close
+
+{
+    "volume_types": [
+    {
+        "extra_specs": {"capabilities": "gpu"},
+        "id": "6685584b-1eac-4da6-b5c3-555430cf68ff",
+        "name": "SSD"
+    },
+    {
+        "extra_specs": {},
+        "id": "8eb69a46-df97-4e41-9586-9a40a7533803",
+        "name": "SATA"
+    }
+    ]
+}

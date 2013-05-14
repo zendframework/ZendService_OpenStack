@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Fri, 26 Apr 2013 12:14:57 GMT
+Content-Length: 188
+Content-Type: application/json
+X-Compute-Request-Id: req-5f49846e-91c6-49cd-986e-3be1eac40d1f
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"addresses": {"public": [{"version": 6, "addr": "2001:4800:7810:0512:1acd:02a8:ff04:3ed2"}, {"version": 4, "addr": "166.78.10.238"}], "private": [{"version": 4, "addr": "10.181.29.83"}]}}

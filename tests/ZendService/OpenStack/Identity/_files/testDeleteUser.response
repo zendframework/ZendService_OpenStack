@@ -1,0 +1,9 @@
+HTTP/1.1 204 No Content
+Server: nginx/0.8.55
+Date: Thu, 02 May 2013 12:26:07 GMT
+Connection: close
+response-source: cloud-auth
+vary: Accept, Accept-Encoding, X-Auth-Token
+VIA: 1.0 Repose (Repose/2.3.5)
+Front-End-Https: on
+

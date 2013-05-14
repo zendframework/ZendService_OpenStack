@@ -1,0 +1,19 @@
+HTTP/1.1 202 OK
+X-Compute-Request-Id: req-ebb5b6ef-afcc-4d01-8d00-5b1dddda6dfc
+Content-Type: application/json
+Content-Length: 261
+Date: Fri, 26 Apr 2013 15:13:09 GMT
+Connection: close
+
+{
+    "snapshot": {
+        "status": "creating",
+        "description": "Daily backup",
+        "created_at": "2013-02-25T03:56:53.081642",
+        "metadata": {},
+        "volume_id": "5aa119a8-d25b-45a7-8d1b-88e127885635",
+        "size": 1,
+        "id": "ffa9bc5e-1172-4021-acaf-cdcd78a9584d",
+        "name": "snap-001"
+    }
+}

@@ -1,0 +1,11 @@
+HTTP/1.1 201 Created
+Server: nginx/0.8.55
+Date: Thu, 02 May 2013 12:25:55 GMT
+Content-Type: application/json
+Connection: close
+Location: https://identity.api.rackspacecloud.com/v2.0/users/352239
+response-source: cloud-auth
+vary: Accept, Accept-Encoding, X-Auth-Token
+VIA: 1.0 Repose (Repose/2.3.5)
+
+{"user":{"id":"111239","enabled":true,"username":"zf2test","email":"test@test.com","RAX-AUTH:defaultRegion":""}}

@@ -1,0 +1,8 @@
+HTTP/1.1 204 No Content
+Date: Fri, 26 Apr 2013 12:31:41 GMT
+Content-Length: 0
+Content-Type: application/json
+X-Compute-Request-Id: req-33a2dd8b-9ff3-4259-bef5-08d599442a54
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+

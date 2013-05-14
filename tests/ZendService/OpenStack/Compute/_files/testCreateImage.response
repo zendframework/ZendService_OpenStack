@@ -1,0 +1,8 @@
+HTTP/1.1 202 Accepted
+Date: Fri, 26 Apr 2013 12:20:17 GMT
+Content-Length: 0
+Location: http://127.0.0.1:8775/v2/817787/images/2c8b8fbe-8c2c-42a5-a004-ba3764997709
+Content-Type: text/html;charset=UTF-8
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+

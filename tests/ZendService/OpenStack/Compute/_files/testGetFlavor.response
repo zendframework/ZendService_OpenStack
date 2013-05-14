@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Fri, 26 Apr 2013 12:51:01 GMT
+Content-Length: 321
+Content-Type: application/json
+X-Compute-Request-Id: req-e4054bb2-916e-470c-a193-a075ffc4bec6
+Connection: close
+Server: Jetty(8.0.y.z-SNAPSHOT)
+
+{"flavor": {"name": "512MB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/817787/flavors/2", "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/817787/flavors/2", "rel": "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 2.0, "disk": 20, "id": "2"}}
