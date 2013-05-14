@@ -5,18 +5,15 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\OpenStack\Compute;
 
+use ZendService\OpenStack\BlockStorage;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as HttpTest;
-use ZendService\OpenStack\BlockStorage;
 
 /**
- * @category   Zend
- * @package    ZendService\OpenStack\Compute
  * @subpackage UnitTests
  */
 class BlockStorageTest extends \PHPUnit_Framework_TestCase
@@ -211,7 +208,7 @@ class BlockStorageTest extends \PHPUnit_Framework_TestCase
     public function testShowVolumeType()
     {
         $type = $this->blockStorage->showVolumeType($this->volumeTypeId);
-        $this->assertTrue($this->blockStorage->isSuccess());  
+        $this->assertTrue($this->blockStorage->isSuccess());
         $this->assertTrue(isset($type['volume_type']));
         $this->assertEquals($this->volumeTypeId, $type['volume_type']['id']);
     }

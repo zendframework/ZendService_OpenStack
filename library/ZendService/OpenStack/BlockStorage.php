@@ -5,22 +5,25 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   ZendService_OpenStack
  */
+
 namespace ZendService\OpenStack;
 
 use Zend\Http\Client as HttpClient;
 
 /**
  * Block Storage OpenStack API
- * 
- * 
+ *
  * @see http://docs.openstack.org/api/openstack-block-storage/2.0/content/
  */
-class BlockStorage extends AbstractOpenStack {
-            
+class BlockStorage extends AbstractOpenStack
+{
     const VERSION = '2.0';
 
+    /**
+     * @param array $options
+     * @param null|HttpClient $httpClient
+     */
     public function __construct(array $options, HttpClient $httpClient = null)
     {
         parent::__construct($options, $httpClient);
@@ -36,17 +39,17 @@ class BlockStorage extends AbstractOpenStack {
      * Create a volume
      *
      * @param  array $options
-     * @return array|boolean
+     * @return array|bool
      */
     public function createVolume(array $options)
     {
         return $this->api->createVolume($options);
     }
- 
+
     /**
      * List volume
      *
-     * @param  boolean $details
+     * @param  bool $details
      * @return array
      */
     public function listVolume($details = false)
@@ -59,7 +62,7 @@ class BlockStorage extends AbstractOpenStack {
      * Show volume
      *
      * @param  string $id
-     * @return array|boolean
+     * @return array|bool
      */
     public function showVolume($id)
     {
@@ -76,7 +79,7 @@ class BlockStorage extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  array $options
-     * @return array|boolean
+     * @return array|bool
      */
     public function updateVolume($id, array $options)
     {
@@ -92,7 +95,7 @@ class BlockStorage extends AbstractOpenStack {
      * Delete volume
      *
      * @param string $id
-     * @return boolean
+     * @return bool
      */
     public function deleteVolume($id)
     {
@@ -109,7 +112,7 @@ class BlockStorage extends AbstractOpenStack {
      * Create snapshot
      *
      * @param  array $options
-     * @return array|boolean
+     * @return array|bool
      */
     public function createSnapshot(array $options)
     {
@@ -117,10 +120,10 @@ class BlockStorage extends AbstractOpenStack {
     }
 
     /**
-     * List snapshot 
+     * List snapshot
      *
-     * @param  boolean $details
-     * @return array|boolean
+     * @param  bool $details
+     * @return array|bool
      */
     public function listSnapshot($details = false)
     {
@@ -128,11 +131,11 @@ class BlockStorage extends AbstractOpenStack {
         return $this->api->listSnapshot($details);
     }
 
-    /** 
+    /**
      * Show snapshot
      *
      * @param  string $id
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function showSnapshot($id)
@@ -150,7 +153,7 @@ class BlockStorage extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  array $options
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function updateSnapshot($id, array $options)
@@ -167,7 +170,7 @@ class BlockStorage extends AbstractOpenStack {
      * Delete snapshot
      *
      * @param  string $id
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteSnapshot($id)
@@ -185,7 +188,7 @@ class BlockStorage extends AbstractOpenStack {
     /**
      * List volume type
      *
-     * @return array|boolean
+     * @return array|bool
      */
     public function listVolumeType()
     {
@@ -196,7 +199,7 @@ class BlockStorage extends AbstractOpenStack {
      * Show volume type
      *
      * @param string $id
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function showVolumeType($id)

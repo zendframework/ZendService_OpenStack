@@ -5,18 +5,15 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\OpenStack\Compute;
 
+use ZendService\OpenStack\Compute;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as HttpTest;
-use ZendService\OpenStack\Compute;
 
 /**
- * @category   Zend
- * @package    ZendService\OpenStack\Compute
  * @subpackage UnitTests
  */
 class ComputeTest extends \PHPUnit_Framework_TestCase
@@ -51,7 +48,7 @@ class ComputeTest extends \PHPUnit_Framework_TestCase
             'key'      => TESTS_ZENDSERVICE_OPENSTACK_APIKEY
         );
 
-        $http = new HttpClient(); 
+        $http = new HttpClient();
         if (!TESTS_ZENDSERVICE_OPENSTACK_ONLINE && $this->responseExists($this->getName())) {
             $httpAdapter = new HttpTest;
             $httpAdapter->setResponse($this->loadResponse('../../Identity/_files/testAuthenticate'));
@@ -60,7 +57,7 @@ class ComputeTest extends \PHPUnit_Framework_TestCase
         $this->compute = new Compute($this->options, $http);
         if (!TESTS_ZENDSERVICE_OPENSTACK_ONLINE && $this->responseExists($this->getName())) {
             $this->compute->getHttpClient()->getAdapter()->setResponse($this->loadResponse($this->getName()));
-        }    
+        }
     }
 
     /**
@@ -242,7 +239,7 @@ class ComputeTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('The server ID is empty');
         }
         $options = array ('name' => 'imageZF2');
-        $this->assertTrue($this->compute->createImage(self::$serverId, $options)); 
+        $this->assertTrue($this->compute->createImage(self::$serverId, $options));
     }
 
     public function testGetFlavor()

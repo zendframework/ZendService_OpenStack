@@ -5,31 +5,33 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   ZendService_OpenStack
  */
+
 namespace ZendService\OpenStack;
 
-use Zend\Http\Client as HttpClient;
-use ZendService\Api\Api;
 use Traversable;
+use ZendService\Api\Api;
+use Zend\Http\Client as HttpClient;
 use Zend\Stdlib\ArrayUtils;
 
 
 /**
  * Object Storage OpenStack API
- * 
- * 
+ *
  * @see http://docs.openstack.org/api/openstack-object-storage/1.0/content/
  */
-class ObjectStorage extends AbstractOpenStack {
-    
+class ObjectStorage extends AbstractOpenStack
+{
     const VERSION           = '1.0';
     const HEADER_AUTHTOKEN  = 'X-Auth-Token';
     const HEADER_STORAGEURL = 'X-Storage-Url';
-    
+
     const ERROR_EMPTY_CONTAINER_NAME = 'The name of the container cannot be empty';
 
-
+    /**
+     * @param array $options
+     * @param null|HttpClient $httpClient
+     */
     public function __construct(array $options, HttpClient $httpClient = null)
     {
         $this->setOptions($options);
@@ -43,21 +45,32 @@ class ObjectStorage extends AbstractOpenStack {
             );
         }
         $this->api->resetLastResponse();
-    }   
+    }
 
+    /**
+     * @param  string $username
+     * @param  string $password
+     * @param  string $key
+     * @return bool
+     */
     protected function auth($username, $password, $key = null)
     {
         $result = $this->api->auth($username, $key);
-        if ($this->api->isSuccess()) {
-            $headers = $this->api->getHttpClient()->getResponse()->getHeaders()->toArray();
-            $this->token = $headers[self::HEADER_AUTHTOKEN];
-            $this->api->setHeaders(array(self::HEADER_AUTHTOKEN => $this->token));
-            $this->api->setUrl($headers[self::HEADER_STORAGEURL]);   
-            return true;
+        if (!$this->api->isSuccess()) {
+            return false;
         }
-        return false;
+
+        $headers = $this->api->getHttpClient()->getResponse()->getHeaders()->toArray();
+        $this->token = $headers[self::HEADER_AUTHTOKEN];
+        $this->api->setHeaders(array(self::HEADER_AUTHTOKEN => $this->token));
+        $this->api->setUrl($headers[self::HEADER_STORAGEURL]);
+        return true;
     }
 
+    /**
+     * @param  array $options
+     * @throws Exception\InvalidArgumentException
+     */
     protected function setOptions(array $options)
     {
         if ($options instanceof Traversable) {
@@ -73,8 +86,12 @@ class ObjectStorage extends AbstractOpenStack {
             );
         }
         $this->options = $options;
-    }    
+    }
 
+    /**
+     * @param  array $options
+     * @return array
+     */
     public function listContainers(array $options = array())
     {
         if (!empty($options)) {
@@ -87,6 +104,11 @@ class ObjectStorage extends AbstractOpenStack {
         return $result;
     }
 
+    /**
+     * @param  array $metadata
+     * @return bool
+     * @throws Exception\InvalidArgumentException
+     */
     protected function checkMetadata($metadata = array())
     {
          if (!empty($metadata)) {
@@ -125,6 +147,12 @@ class ObjectStorage extends AbstractOpenStack {
     {
     }
 
+    /**
+     * @param  string $name
+     * @param  array $metadata
+     * @return bool
+     * @throws Exception\InvalidArgumentException
+     */
     public function createContainer($name, $metadata = array())
     {
         if (empty($name)) {
@@ -137,6 +165,11 @@ class ObjectStorage extends AbstractOpenStack {
         return $this->api->isSuccess();
     }
 
+    /**
+     * @param  string $name
+     * @return bool
+     * @throws Exception\InvalidArgumentException
+     */
     public function deleteContainer($name)
     {
         if (empty($name)) {
@@ -149,7 +182,7 @@ class ObjectStorage extends AbstractOpenStack {
     }
 
     public function listObjects()
-    {       
+    {
     }
 
     public function getContainerMetadata()

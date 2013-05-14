@@ -5,14 +5,13 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendService\OpenStack;
 
-use Zend\Http\Client as HttpClient;
-use ZendService\Api\Api;
 use Traversable;
+use ZendService\Api\Api;
+use Zend\Http\Client as HttpClient;
 use Zend\Stdlib\ArrayUtils;
 
 abstract class AbstractOpenStack
@@ -37,10 +36,10 @@ abstract class AbstractOpenStack
      * @var HttpClient
      */
     protected $httpClient;
-    
+
     /**
      * Api
-     * 
+     *
      * @var Api
      */
     protected $api;
@@ -105,14 +104,14 @@ abstract class AbstractOpenStack
         }
         $this->api->resetLastResponse();
     }
-    
+
     /**
      * Authentication API
-     * 
+     *
      * @param  string $username
      * @param  string $password
      * @param  string $key
-     * @return boolean
+     * @return bool
      */
     protected function auth($username, $password, $key = null)
     {
@@ -120,7 +119,7 @@ abstract class AbstractOpenStack
             $result = $this->api->authenticate($username, $password);
         } else {
             $result = $this->api->authenticateByKey($username, $key);
-        }    
+        }
         if ($this->api->isSuccess()) {
             if (isset($result['access']['token']['id'])) {
                 $this->token = $result['access']['token']['id'];
@@ -135,17 +134,17 @@ abstract class AbstractOpenStack
     /**
      * Get the public URL for the service
      *
-     * @param string $type type of service
-     * @param string $version
-     * @param string $region
-     * @return string|boolean
+     * @param  string $type type of service
+     * @param  string $version
+     * @param  string $region
+     * @return string|bool
      */
     public function getPublicUrl($type, $version = null, $region = null)
     {
         foreach ($this->services as $service) {
             if ($service['type'] === strtolower($type)) {
                 foreach ($service['endpoints'] as $endpoint) {
-                    if ((empty($region) || $endpoint['region'] === $region) && 
+                    if ((empty($region) || $endpoint['region'] === $region) &&
                         (empty($version) || ($endpoint['versionId'] === $version || $endpoint['versionId'] . '.0'  === $version))) {
                         return $endpoint['publicURL'];
                     }
@@ -153,12 +152,12 @@ abstract class AbstractOpenStack
             }
         }
         return false;
-    }   
+    }
 
     /**
      * Set the API response to raw format
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      */
     public function setRawResponse(boolean $enabled)
     {
@@ -166,10 +165,10 @@ abstract class AbstractOpenStack
         return $this;
     }
 
-    /** 
+    /**
      * Get the API response format
      *
-     * @return boolean
+     * @return bool
      */
     public function getRawResponse()
     {
@@ -177,11 +176,11 @@ abstract class AbstractOpenStack
     }
 
     /**
-     * Set the options for the API authentication 
-     * 
+     * Set the options for the API authentication
+     *
      * @param  array $options
-     * @return AbstractOpenStack
-     * @throws Exception\InvalidArgumentException 
+     * @return self
+     * @throws Exception\InvalidArgumentException
      */
     protected function setOptions(array $options)
     {
@@ -210,32 +209,32 @@ abstract class AbstractOpenStack
         $this->options = $options;
         return $this;
     }
-    
+
     /**
      * Get the config parameters
-     * 
-     * @return array 
+     *
+     * @return array
      */
     public function getOptions()
     {
-        return $this->options;    
+        return $this->options;
     }
-    
+
     /**
      * Get the API adapter
-     * 
-     * @return Api 
+     *
+     * @return Api
      */
     public function getApiAdapter()
     {
         return $this->api;
     }
-    
+
     /**
      * Set the API adapter
-     * 
-     * @param  Api $api 
-     * @return AbstractOpenStack
+     *
+     * @param  Api $api
+     * @return self
      */
     public function setApiAdapter(Api $api)
     {
@@ -266,26 +265,26 @@ abstract class AbstractOpenStack
     /**
      * Return true is the last call was successful
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuccess()
     {
         return $this->api->isSuccess();
     }
-    
+
     /**
      * Return the authentication token
-     * 
-     * @return string 
+     *
+     * @return string
      */
     public function getToken()
     {
         return $this->token;
     }
-    
+
     /**
-     * Return the available services 
-     * 
+     * Return the available services
+     *
      * @return array
      */
     public function getAvailableServices()
@@ -307,7 +306,7 @@ abstract class AbstractOpenStack
      * Set the HTTP client
      *
      * @param  HttpClient $http
-     * @return AbstractOpenStack
+     * @return self
      */
     public function setHttpClient(HttpClient $http)
     {
@@ -319,7 +318,7 @@ abstract class AbstractOpenStack
      * Set the API URL
      *
      * @param  string $url
-     * @return AbstractOpenStack
+     * @return self
      */
     public function setUrl($url)
     {

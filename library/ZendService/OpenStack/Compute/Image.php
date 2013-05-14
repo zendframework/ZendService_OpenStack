@@ -5,7 +5,6 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendService\OpenStack\Compute;
@@ -17,58 +16,67 @@ class Image
     const ERROR_PARAM_CONSTRUCT = 'You must pass a ZendService\OpenStack\Compute object and an array';
     const ERROR_PARAM_NO_NAME   = 'You must pass the image\'s name in the array (name)';
     const ERROR_PARAM_NO_ID     = 'You must pass the image\'s id in the array (id)';
+
     /**
      * Name of the image
      *
      * @var string
      */
     protected $name;
+
     /**
      * Id of the image
      *
      * @var string
      */
     protected $id;
+
     /**
      * Server Id of the image
      *
      * @var string
      */
     protected $serverId;
+
     /**
      * Updated data
      *
      * @var string
      */
     protected $updated;
+
     /**
      * Created data
      *
      * @var string
      */
     protected $created;
+
     /**
      * Status
      *
      * @var string
      */
     protected $status;
+
     /**
      * Status progress
      *
      * @var integer
      */
     protected $progress;
+
     /**
      * The service that has created the image object
      *
-     * @var ZendService\OpenStack\Servers
+     * @var Compute
      */
     protected $service;
+
     /**
      * Construct
      *
-     * @param OpenStackServers $service
+     * @param Compute $service
      * @param array $data
      */
     public function __construct(Compute $service, array $data)
@@ -98,6 +106,7 @@ class Image
             $this->progress = $data['progress'];
         }
     }
+
     /**
      * Get the name of the image
      *
@@ -107,6 +116,7 @@ class Image
     {
         return $this->name;
     }
+
     /**
      * Get the image's id
      *
@@ -116,6 +126,7 @@ class Image
     {
         return $this->id;
     }
+
     /**
      * Get the server's id of the image
      *
@@ -125,6 +136,7 @@ class Image
     {
         return $this->serverId;
     }
+
     /**
      * Get the updated data
      *
@@ -134,6 +146,7 @@ class Image
     {
         return $this->updated;
     }
+
     /**
      * Get the created data
      *
@@ -143,10 +156,11 @@ class Image
     {
         return $this->created;
     }
+
     /**
      * Get the image's status
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function getStatus()
     {
@@ -158,10 +172,11 @@ class Image
         }
         return false;
     }
+
     /**
      * Get the progress's status
      *
-     * @return integer|boolean
+     * @return integer|bool
      */
     public function getProgress()
     {
@@ -173,6 +188,7 @@ class Image
         }
         return false;
     }
+
     /**
      * To Array
      *

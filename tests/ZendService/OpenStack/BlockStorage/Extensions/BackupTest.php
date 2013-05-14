@@ -5,18 +5,15 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\OpenStack\BlockStorage\Extensions;
 
+use ZendService\OpenStack\BlockStorage\Extensions\Backup;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as HttpTest;
-use ZendService\OpenStack\BlockStorage\Extensions\Backup;
 
 /**
- * @category   Zend
- * @package    ZendService\OpenStack\Compute
  * @subpackage UnitTests
  */
 class BackupTest extends \PHPUnit_Framework_TestCase
@@ -103,15 +100,15 @@ class BackupTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->backup->listBackup();
         $this->assertTrue($this->backup->isSuccess());
-        $this->assertTrue(is_array($result));         
+        $this->assertTrue(is_array($result));
     }
 
     public function testListBackupDetails()
     {
         $result = $this->backup->listBackup(true);
         $this->assertTrue($this->backup->isSuccess());
-        $this->assertTrue(is_array($result));   
-        $this->assertTrue(isset($result['backups'][0]['availability_zone']));      
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(isset($result['backups'][0]['availability_zone']));
 
     }
 
@@ -119,8 +116,8 @@ class BackupTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->backup->showBackup($this->backupId);
         $this->assertTrue($this->backup->isSuccess());
-        $this->assertTrue(is_array($result));   
-        $this->assertEquals($this->backupId, $result['backup']['id']);      
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($this->backupId, $result['backup']['id']);
 
     }
 
@@ -133,8 +130,8 @@ class BackupTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->backup->restoreBackup($this->backupId, $this->volumeId);
         $this->assertTrue($this->backup->isSuccess());
-        $this->assertTrue(is_array($result));   
-        $this->assertEquals($this->backupId, $result['restore']['backup_id']); 
-        $this->assertEquals($this->volumeId, $result['restore']['volume_id']);     
-    } 
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($this->backupId, $result['restore']['backup_id']);
+        $this->assertEquals($this->volumeId, $result['restore']['volume_id']);
+    }
 }

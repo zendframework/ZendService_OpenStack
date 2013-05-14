@@ -5,18 +5,15 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\OpenStack\Compute;
 
+use ZendService\OpenStack\ObjectStorage;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as HttpTest;
-use ZendService\OpenStack\ObjectStorage;
 
 /**
- * @category   Zend
- * @package    ZendService\OpenStack\ObjectStorage
  * @subpackage UnitTests
  */
 class ObjectStorageTest extends \PHPUnit_Framework_TestCase
@@ -45,7 +42,7 @@ class ObjectStorageTest extends \PHPUnit_Framework_TestCase
             'foo2' => 'bar2'
         );
 
-        $http = new HttpClient(); 
+        $http = new HttpClient();
         if (!TESTS_ZENDSERVICE_OPENSTACK_ONLINE) {
             if (!$this->responseExists($this->getName())) {
                 $this->markTestSkipped(
@@ -59,7 +56,7 @@ class ObjectStorageTest extends \PHPUnit_Framework_TestCase
         $this->objectStorage = new ObjectStorage($this->options, $http);
         if (!TESTS_ZENDSERVICE_OPENSTACK_ONLINE) {
             $this->objectStorage->getHttpClient()->getAdapter()->setResponse($this->loadResponse($this->getName()));
-        }    
+        }
     }
 
     /**
@@ -94,10 +91,10 @@ class ObjectStorageTest extends \PHPUnit_Framework_TestCase
                           $httpClient->getResponse()->getBody();
             file_put_contents($fileResponse, $response);
         }
- 
+
     }
 
-    public function testListContainers() 
+    public function testListContainers()
     {
         $result = $this->objectStorage->listContainers();
         $this->assertTrue($this->objectStorage->isSuccess());
