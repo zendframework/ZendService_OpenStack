@@ -25,7 +25,7 @@ In order to execute the online test you need to edit the `TestConfiguration.php.
 You can run the tests executing the following command under the tests folder:
 
 ```
-phpunit ZendService\OpenStack
+phpunit ZendService/OpenStack
 ```
 
 Installation
@@ -36,3 +36,4 @@ You can install using:
 curl -s https://getcomposer.org/installer | php
 php composer.phar install
 ```
+
