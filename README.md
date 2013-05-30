@@ -15,7 +15,7 @@ The development state of each sub-components is reported below:
     - BlockStorage [COMPLETED]
     - Compute [COMPLETED]
     - Identity [COMPLETED]
-    - ObjectStorage [TO BE COMPLETED]
+    - ObjectStorage [COMPLETED]
     - Networking [TO DO]
     - Image [TO DO]
 

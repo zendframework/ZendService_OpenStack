@@ -1,0 +1,13 @@
+HTTP/1.1 201 Created
+X-Copied-From-Last-Modified: Thu, 30 May 2013 09:09:34 GMT
+Content-Type: text/html; charset=UTF-8
+Date: Thu, 30 May 2013 09:09:38 GMT
+Etag: 1234d99baa54328937dc65219d927d45
+X-Trans-Id: tx8b8e74d592974af9aa12348caabf7b7a
+Connection: close
+X-Copied-From: zf2test/zf2logo
+Last-Modified: Thu, 30 May 2013 09:09:38 GMT
+X-Object-Meta-Foo: bar
+Content-Length: 0
+X-Object-Meta-Foo2: bar2
+
