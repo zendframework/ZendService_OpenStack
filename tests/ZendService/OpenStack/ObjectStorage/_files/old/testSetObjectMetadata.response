@@ -1,0 +1,8 @@
+HTTP/1.1 202 Accepted
+Content-Type: text/html; charset=UTF-8
+Date: Thu, 30 May 2013 09:09:34 GMT
+X-Trans-Id: tx3090af4eb90c491895e55f95085574aa
+Connection: close
+Content-Length: 76
+
+<html><h1>Accepted</h1><p>The request is accepted for processing.</p></html>

@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+X-Timestamp: 1369904974.46874
+Content-Type: application/json
+Date: Thu, 30 May 2013 09:09:36 GMT
+Accept-Ranges: bytes
+Etag: e14cd99baa54328937dc65219d927d45
+X-Trans-Id: tx642d49eee3c04bfb964e5d938c96294c
+Connection: close
+Last-Modified: Thu, 30 May 2013 09:09:34 GMT
+X-Object-Meta-Foo: bar
+Content-Length: 7627
+X-Object-Meta-Foo2: bar2
+

@@ -1,0 +1,13 @@
+HTTP/1.1 204 No Content
+X-Timestamp: 1369840683.27002
+Content-Type: application/json; charset=utf-8
+Date: Thu, 30 May 2013 09:09:22 GMT
+X-Container-Meta-Foo: bar
+X-Container-Meta-Foo2: bar2
+X-Container-Bytes-Used: 0
+X-Container-Object-Count: 0
+Accept-Ranges: bytes
+X-Trans-Id: 1234123448710c42d485f0605234ec147f
+Connection: close
+Content-Length: 0
+
