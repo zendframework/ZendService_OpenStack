@@ -17,11 +17,12 @@ use Zend\Stdlib\ArrayUtils;
 
 /**
  * Object Storage OpenStack API
- *  
+ *
  * @see http://docs.openstack.org/api/openstack-object-storage/1.0/content/
  */
-class ObjectStorage extends AbstractOpenStack {
-    
+class ObjectStorage extends AbstractOpenStack
+{
+
     const VERSION                    = '1.0';
     const HEADER_AUTHTOKEN           = 'X-Auth-Token';
     const HEADER_STORAGEURL          = 'X-Storage-Url';
@@ -56,7 +57,7 @@ class ObjectStorage extends AbstractOpenStack {
      * @param  string $username
      * @param  string $password
      * @param  string $key
-     * @return boolean
+     * @return bool
      */
     protected function auth($username, $password, $key = null)
     {
@@ -179,12 +180,12 @@ class ObjectStorage extends AbstractOpenStack {
         return $this->extractMetadata($headers, 'X-Account');
     }
 
-    /** 
+    /**
      * Set the account metadata
      * It creates or updates the account metadata.
      *
      * @param  array $metadata
-     * @return boolean
+     * @return bool
      */
     public function setAccountMetadata(array $metadata)
     {
@@ -196,7 +197,7 @@ class ObjectStorage extends AbstractOpenStack {
      * Delete account metadata
      *
      * @param  array $metadata to be removed
-     * @return boolean
+     * @return bool
      */
     public function deleteAccountMetadata(array $metadata)
     {
@@ -209,7 +210,7 @@ class ObjectStorage extends AbstractOpenStack {
      *
      * @param  string $name
      * @param  array $metadata
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function createContainer($name, $metadata = array())
@@ -228,7 +229,7 @@ class ObjectStorage extends AbstractOpenStack {
      * Delete a container
      *
      * @param  string $name
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteContainer($name)
@@ -251,7 +252,7 @@ class ObjectStorage extends AbstractOpenStack {
      * @throws Exception\InvalidArgumentException
      */
     public function listObjects($container, $options= array())
-    {  
+    {
         if (empty($container)) {
             throw new Exception\InvalidArgumentException(
                 self::ERROR_EMPTY_CONTAINER_NAME
@@ -290,7 +291,7 @@ class ObjectStorage extends AbstractOpenStack {
      * Set container metadata
      *
      * @param  string $container
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setContainerMetadata($container, array $metadata)
@@ -309,7 +310,7 @@ class ObjectStorage extends AbstractOpenStack {
      *
      * @param  string $container
      * @param  array $metadata
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteContainerMetadata($container, array $metadata)
@@ -342,14 +343,14 @@ class ObjectStorage extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException(
                 self::ERROR_EMPTY_OBJECT_NAME
             );
-        } 
+        }
         return $this->api->getObject($container, $object);
     }
 
     /**
      * Set object
      *
-     * Store the content in a object. 
+     * Store the content in a object.
      * You can specify if the object has an expire date (optional parameter)
      *
      * @param  string $container
@@ -357,7 +358,7 @@ class ObjectStorage extends AbstractOpenStack {
      * @param  string $content
      * @param  array $metadata
      * @param  string $expire
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setObject($container, $object, $content, $metadata = array(), $expire = null)
@@ -381,7 +382,7 @@ class ObjectStorage extends AbstractOpenStack {
      *
      * @param  string $container
      * @param  string $object
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteObject($container, $object)
@@ -407,7 +408,7 @@ class ObjectStorage extends AbstractOpenStack {
      * @param  string $objectFrom
      * @param  string $containerTo
      * @param  string $objectTo
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function copyObject($containerFrom, $objectFrom, $containerTo, $objectTo)
@@ -447,7 +448,7 @@ class ObjectStorage extends AbstractOpenStack {
      * @param  string $container
      * @param  string $object
      * @param  array $metadata
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setObjectMetadata($container, $object, array $metadata)

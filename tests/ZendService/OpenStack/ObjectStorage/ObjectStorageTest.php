@@ -93,8 +93,8 @@ class ObjectStorageTest extends \PHPUnit_Framework_TestCase
 
         $http = new HttpClient();
         // Use this for SSL certificates on Debian Linux box
-        // $http = new HttpClient(null, array('sslcapath' => '/etc/ssl/certs')); 
-        
+        // $http = new HttpClient(null, array('sslcapath' => '/etc/ssl/certs'));
+
         if (!TESTS_ZENDSERVICE_OPENSTACK_ONLINE) {
             if (!$this->responseExists($this->getName())) {
                 $this->markTestSkipped(
@@ -222,7 +222,7 @@ class ObjectStorageTest extends \PHPUnit_Framework_TestCase
     public function testDeleteObject()
     {
         $this->assertTrue($this->objectStorage->deleteObject(
-            $this->nameContainer, 
+            $this->nameContainer,
             $this->nameObject
         ));
         if (self::$copySuccess) {
