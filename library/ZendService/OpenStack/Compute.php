@@ -3,57 +3,57 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   ZendService_OpenStack
  */
+
 namespace ZendService\OpenStack;
 
 use Zend\Http\Client as HttpClient;
 
 /**
  * Compute OpenStack API
- * 
- * @see http://docs.openstack.org/api/openstack-compute/2/content/index.html 
+ *
+ * @see http://docs.openstack.org/api/openstack-compute/2/content/index.html
  */
-class Compute extends AbstractOpenStack {
-    
+class Compute extends AbstractOpenStack
+{
     const API_VERSION = '2.0';
 
     /**
-     * Constructor 
-     *
-     * @param array $options 
-     * @param HttpClient $httpClient 
+     * @param array $options
+     * @param null|HttpClient $httpClient
      */
     public function __construct(array $options, HttpClient $httpClient = null)
     {
         parent::__construct($options, $httpClient);
         $this->api->setApiPath(__DIR__ . '/api/compute');
+
         $region = isset($options['region']) ? $options['region'] : null;
         $url    = $this->getPublicUrl('compute', self::API_VERSION, $region);
+
         if (false !== $url) {
             $this->api->setUrl($url);
         }
     }
-  
+
     /**
      * Get the list of the servers
      * If $details is true returns detailed info
      *
      * $options = array(
-     *  'image'         => 'the imageRef',
-     *  'flavor'        => 'the flavorRef',
-     *  'name'          => 'the name of the server',
-     *  'status'        => 'the status of the server',
-     *  'marker'        => 'the marker to start from',
-     *  'limit'         => 'max number of servers to return',
-     *  'changes-since' => 'filter on the change since'
-     * )
-     * 
+     *     'image'         => 'the imageRef',
+     *     'flavor'        => 'the flavorRef',
+     *     'name'          => 'the name of the server',
+     *     'status'        => 'the status of the server',
+     *     'marker'        => 'the marker to start from',
+     *     'limit'         => 'max number of servers to return',
+     *     'changes-since' => 'filter on the change since',
+     * );
+     *
      * @param  arrray  $options
-     * @param  boolean $details
-     * @return Compute\ServerList|array|boolean
+     * @param  bool $details
+     * @return Compute\ServerList|array|bool
      */
     public function listServers(array $options = array(), $details = false)
     {
@@ -69,25 +69,25 @@ class Compute extends AbstractOpenStack {
         }
         return $result;
     }
-    
+
     /**
-     * Create a server 
-     * 
+     * Create a server
+     *
      * The configuration data are specified by $options = array(
-     *  'name'        => 'the name of the server',
-     *  'imageRef'    => 'the image to use for the server',
-     *  'flavorRef'   => 'the configuration reference for the server',
-     *  'metadata'    => 'the array of metadata', // (optional)
-     *  'file'        => 'the path of the file to create on the server', // (optional)
-     *  'content'     => 'the content of the file' // (optional)
+     *     'name'        => 'the name of the server',
+     *     'imageRef'    => 'the image to use for the server',
+     *     'flavorRef'   => 'the configuration reference for the server',
+     *     'metadata'    => 'the array of metadata', // (optional)
+     *     'file'        => 'the path of the file to create on the server', // (optional)
+     *     'content'     => 'the content of the file', // (optional)
      * )
-     * 
-     * @param  array $options 
-     * @return Compute\Server|array|boolean
+     *
+     * @param  array $options
+     * @return Compute\Server|array|bool
      */
     public function createServer(array $options)
     {
-        if (empty($options) || !isset($options['name']) || !isset($options['imageRef']) || 
+        if (empty($options) || !isset($options['name']) || !isset($options['imageRef']) ||
             !isset($options['flavorRef'])) {
             throw new Exception\InvalidArgumentException(
                 'The options must be an array with the following values: name, imageRef and flavorRef'
@@ -109,8 +109,8 @@ class Compute extends AbstractOpenStack {
     /**
      * Get Server
      *
-     * @param string $id
-     * @return Compute\Server|boolean
+     * @param  string $id
+     * @return Compute\Server|bool
      */
     public function getServer($id)
     {
@@ -121,7 +121,7 @@ class Compute extends AbstractOpenStack {
         }
         $result = $this->api->getServer($id);
         if (!$this->getRawResponse() && isset($result['server'])) {
-            return new Compute\Server($this, $result['server']);    
+            return new Compute\Server($this, $result['server']);
         }
         return $result;
     }
@@ -130,13 +130,13 @@ class Compute extends AbstractOpenStack {
      * Update the server
      *
      * The values to change are specified using $options = array(
-     *  'name'       => 'the new name of the server',
-     *  'accessIPv4' => 'the new IPv4 address of the server',
-     *  'accessIPv6' => 'the new IPv6 address of the server'
-     *  )
+     *    'name'       => 'the new name of the server',
+     *    'accessIPv4' => 'the new IPv4 address of the server',
+     *    'accessIPv6' => 'the new IPv6 address of the server',
+     * )
      *
-     *  @param array $options
-     *  @return Compute\Server|boolean
+     * @param  array $options
+     * @return Compute\Server|bool
      */
     public function updateServer($id, array $options)
     {
@@ -145,7 +145,7 @@ class Compute extends AbstractOpenStack {
                 'You must specify the server\'s ID'
             );
         }
-        if (empty($options) || (!isset($options['name']) && 
+        if (empty($options) || (!isset($options['name']) &&
             !isset($options['accessIPv4']) && !isset($options['accessIPv6']))) {
             throw new Exception\InvalidArgumentException(
                 'The options must be an array with following keys: server\'s ID, name or accessIPv4 and accessIPv6'
@@ -161,7 +161,8 @@ class Compute extends AbstractOpenStack {
     /**
      * Delete a server
      *
-     * @param string $id
+     * @param  string $id
+     * @return bool
      */
     public function deleteServer($id)
     {
@@ -178,7 +179,7 @@ class Compute extends AbstractOpenStack {
      * List addresses of a server
      *
      * @param  string $id
-     * @return boolean|array
+     * @return bool|array
      * @throws Exception\InvalidArgumentException
      */
     public function listAddresses($id)
@@ -196,7 +197,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $network
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function listAddressesByNetwork($id, $network)
@@ -219,7 +220,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $password
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function changeAdminPass($id, $password)
@@ -242,8 +243,8 @@ class Compute extends AbstractOpenStack {
      * Reboot a server
      *
      * @param  string $id
-     * @param  boolean $soft
-     * @return boolean
+     * @param  bool $soft
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function rebootServer($id, $soft = true)
@@ -255,28 +256,28 @@ class Compute extends AbstractOpenStack {
         }
         $type = $soft ? 'SOFT' : 'HARD';
         $this->api->rebootServer($id, $type);
-        return $this->api->isSuccess(); 
+        return $this->api->isSuccess();
     }
 
     /**
      * Rebuild a server
      *
      * The options is an array with the follwing structure = array(
-     *  'name'       => The new name of the server,
-     *  'imageRef'   => The image reference. Specify as an ID or full URL,
-     *  'adminPass'  => The administrator password,
-     *  'accessIPv4' => The IP version 4 address (optional),
-     *  'accessIPv6' => The IP version 6 address (optional),
-     *  'metadata'   => Array of metadata (optional),
-     *  'personality => array(  (optional)
-     *      'file'     => The file path,
-     *      'contents' => The file content
-     *      )
+     *     'name'       => The new name of the server,
+     *     'imageRef'   => The image reference. Specify as an ID or full URL,
+     *     'adminPass'  => The administrator password,
+     *     'accessIPv4' => The IP version 4 address (optional),
+     *     'accessIPv6' => The IP version 6 address (optional),
+     *     'metadata'   => Array of metadata (optional),
+     *     'personality => array(  (optional)
+     *         'file'     => The file path,
+     *         'contents' => The file content,
+     *     ),
      * )
      *
      * @param  string $id
      * @param  array $options
-     * @return Compute\Server|boolean
+     * @return Compute\Server|bool
      * @throws Exception\InvalidArgumentException
      */
     public function rebuildServer($id, array $options)
@@ -286,7 +287,7 @@ class Compute extends AbstractOpenStack {
                 You must specify the server\'s ID'
             );
         }
-        if (empty($options) || !isset($options['name']) || 
+        if (empty($options) || !isset($options['name']) ||
             !isset($options['imageRef']) || !isset($options['adminPass'])) {
             throw new Exception\InvalidArgumentException(
                 'The options must be an array with following keys: name, imageRef, adminPass'
@@ -304,7 +305,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $flavorRef
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function resizeServer($id, $flavorRef)
@@ -327,7 +328,7 @@ class Compute extends AbstractOpenStack {
      * Confirm resize of the server
      *
      * @param  string $id
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function confirmResizeServer($id)
@@ -345,7 +346,7 @@ class Compute extends AbstractOpenStack {
      * Revert resize of a server
      *
      * @param  string $id
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function revertResizeServer($id)
@@ -357,7 +358,7 @@ class Compute extends AbstractOpenStack {
         }
         $this->api->revertResizeServer($id);
         return $this->api->isSuccess();
- 
+
     }
 
     /**
@@ -365,7 +366,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  array $options
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function createImage($id, array $options)
@@ -388,8 +389,8 @@ class Compute extends AbstractOpenStack {
      * List of flavors
      *
      * @param  array $options
-     * @param  boolean $details
-     * @return array|boolean
+     * @param  bool $details
+     * @return array|bool
      */
     public function listFlavors(array $options = array(), $details = false)
     {
@@ -407,7 +408,7 @@ class Compute extends AbstractOpenStack {
      * Get the flavor
      *
      * @param  string $id
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function getFlavor($id)
@@ -424,8 +425,8 @@ class Compute extends AbstractOpenStack {
      * List images
      *
      * @param  array $options
-     * @param  boolean $details
-     * @return Compute\ImageList|boolean
+     * @param  bool $details
+     * @return Compute\ImageList|bool
      */
     public function listImages(array $options = array(), $details = false)
     {
@@ -437,7 +438,7 @@ class Compute extends AbstractOpenStack {
             $this->api->setQueryParams();
         }
         if (!$this->getRawResponse() && isset($result['images'])) {
-            return new Compute\ImageList($this, $result['images']); 
+            return new Compute\ImageList($this, $result['images']);
         }
         return $result;
     }
@@ -446,7 +447,7 @@ class Compute extends AbstractOpenStack {
      * Get image
      *
      * @param  string $id
-     * @return Compute\Image|boolean
+     * @return Compute\Image|bool
      * @throws Exception\InvalidArgumentException
      */
     public function getImage($id)
@@ -467,7 +468,7 @@ class Compute extends AbstractOpenStack {
      * Delete an image
      *
      * @param  string $id
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteImage($id)
@@ -476,7 +477,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the image\'s ID'
             );
-        } 
+        }
         $this->api->deleteImage($id);
         return $this->api->isSuccess();
     }
@@ -485,7 +486,7 @@ class Compute extends AbstractOpenStack {
      * List server metadata
      *
      * @param  string $id
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function listServerMetadata($id)
@@ -494,7 +495,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the server\'s ID'
             );
-        } 
+        }
         return $this->api->listMetadata('servers', $id);
     }
 
@@ -502,7 +503,7 @@ class Compute extends AbstractOpenStack {
      * List image metadata
      *
      * @param  string $id
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function listImageMetadata($id)
@@ -511,7 +512,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the image\'s ID'
             );
-        } 
+        }
         return $this->api->listMetadata('images', $id);
     }
 
@@ -520,7 +521,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  array $metadata
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setServerMetadata($id, array $metadata)
@@ -534,17 +535,17 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the metadata'
             );
-        }  
+        }
         $result = $this->api->setMetadata('servers', $id, $metadata);
         return $this->api->isSuccess();
     }
-    
+
     /**
      * Set the image's metadata
      *
      * @param  string $id
      * @param  array $metadata
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setImageMetadata($id, array $metadata)
@@ -558,7 +559,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the metadata'
             );
-        }  
+        }
         $result = $this->api->setMetadata('images', $id, $metadata);
         return $this->api->isSuccess();
     }
@@ -568,7 +569,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  array $metadata
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function updateServerMetadata($id, array $metadata)
@@ -582,7 +583,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the metadata'
             );
-        }  
+        }
         return $this->api->updateMetadata('servers', $id, $metadata);
     }
 
@@ -591,7 +592,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  array $metadata
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function updateImageMetadata($id, array $metadata)
@@ -605,7 +606,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the metadata'
             );
-        }  
+        }
         return $this->api->updateMetadata('images', $id, $metadata);
     }
 
@@ -614,7 +615,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $key
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function getServerMetadataItem($id, $key)
@@ -628,16 +629,16 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the key of the metadata'
             );
-        }  
+        }
         return $this->api->getMetadataItem('servers', $id, $key);
     }
-   
+
     /**
      * Get image's metadata item
      *
      * @param  string $id
      * @param  string $key
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function getImageMetadataItem($id, $key)
@@ -651,7 +652,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the key of the metadata'
             );
-        }  
+        }
         return $this->api->getMetadataItem('images', $id, $key);
     }
 
@@ -661,7 +662,7 @@ class Compute extends AbstractOpenStack {
      * @param  string $id
      * @param  string $key
      * @param  string $value
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setServerMetadataItem($id, $key, $value = '')
@@ -675,7 +676,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the key of the metadata'
             );
-        }  
+        }
         $this->api->setMetadataItem('servers', $id, $key, $value);
         return $this->api->isSuccess();
     }
@@ -686,7 +687,7 @@ class Compute extends AbstractOpenStack {
      * @param  string $id
      * @param  string $key
      * @param  string $value
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function setImageMetadataItem($id, $key, $value = '')
@@ -700,7 +701,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the key of the metadata'
             );
-        }  
+        }
         $this->api->setMetadataItem('images', $id, $key, $value);
         return $this->api->isSuccess();
     }
@@ -710,7 +711,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $key
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteServerMetadataItem($id, $key)
@@ -724,7 +725,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the key of the metadata'
             );
-        }  
+        }
         $this->api->deleteMetadataItem('servers', $id, $key);
         return $this->api->isSuccess();
     }
@@ -734,7 +735,7 @@ class Compute extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $key
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteImageMetadataItem($id, $key)
@@ -748,7 +749,7 @@ class Compute extends AbstractOpenStack {
             throw new Exception\InvalidArgumentException('
                 You must specify the key of the metadata'
             );
-        }  
+        }
         $this->api->deleteMetadataItem('images', $id, $key);
         return $this->api->isSuccess();
     }

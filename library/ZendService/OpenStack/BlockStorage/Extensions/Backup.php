@@ -3,31 +3,36 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   ZendService_OpenStack
  */
 namespace ZendService\OpenStack\BlockStorage\Extensions;
 
-use Zend\Http\Client as HttpClient;
 use ZendService\OpenStack\AbstractOpenStack;
+use Zend\Http\Client as HttpClient;
 
 /**
  * Backup - Block Storage Extension OpenStack API
- * 
- * 
+ *
  * @see http://docs.openstack.org/api/openstack-block-storage/2.0/content/Backups.html
  */
-class Backup extends AbstractOpenStack {
-            
+class Backup extends AbstractOpenStack
+{
     const VERSION = '2.0';
 
+    /**
+     * @param array $options
+     * @param null|HttpClient $httpClient
+     */
     public function __construct(array $options, HttpClient $httpClient = null)
     {
         parent::__construct($options, $httpClient);
+
         $this->api->setApiPath(__DIR__ . '/../../api/blockstorage/extensions');
+
         $region = isset($options['region']) ? $options['region'] : null;
-        $url = $this->getPublicUrl('volume', null, $region);
+        $url    = $this->getPublicUrl('volume', null, $region);
+
         if (false !== $url) {
             $this->api->setUrl($url);
         }
@@ -37,7 +42,7 @@ class Backup extends AbstractOpenStack {
      * Create backup
      *
      * @param  array $options
-     * @return array|boolean
+     * @return array|bool
      */
     public function createBackup(array $options)
     {
@@ -47,8 +52,8 @@ class Backup extends AbstractOpenStack {
     /**
      * List backup
      *
-     * @param  boolean $details
-     * @return array|boolean
+     * @param  bool $details
+     * @return array|bool
      */
     public function listBackup($details = false)
     {
@@ -57,10 +62,10 @@ class Backup extends AbstractOpenStack {
     }
 
     /**
-     * Show backup 
+     * Show backup
      *
      * @param  string $id
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function showBackup($id)
@@ -77,7 +82,7 @@ class Backup extends AbstractOpenStack {
      * Delete backup
      *
      * @param  string $id
-     * @return boolean
+     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     public function deleteBackup($id)
@@ -96,7 +101,7 @@ class Backup extends AbstractOpenStack {
      *
      * @param  string $id
      * @param  string $volumeId
-     * @return array|boolean
+     * @return array|bool
      * @throws Exception\InvalidArgumentException
      */
     public function restoreBackup($id, $volumeId)
@@ -113,4 +118,4 @@ class Backup extends AbstractOpenStack {
         }
         return $this->api->restoreBackup($id, $volumeId);
     }
-} 
+}

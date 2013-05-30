@@ -3,28 +3,31 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   ZendService_OpenStack
  */
+
 namespace ZendService\OpenStack;
 
 /**
  * Networking OpenStack API
- * 
- * 
+ *
  * @see http://docs.openstack.org/api/openstack-network/2.0/content/
  */
-class Networking extends AbstractOpenStack {
-    
+class Networking extends AbstractOpenStack
+{
     const VERSION = '2.0';
-    
+
+    /**
+     * @todo  complete the constructor
+     * @param array $options
+     * @param null|HttpClient $httpClient
+     */
     public function __construct(array $options, HttpClient $httpClient = null)
     {
         parent::__construct($options, $httpClient);
         $this->api->setApiPath(__DIR__ . '/api/networking');
-        // @todo complete the constructor                
-    }    
+    }
 
     public function listNetworks()
     {

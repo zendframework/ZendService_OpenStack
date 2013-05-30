@@ -3,9 +3,8 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\OpenStack\Identity;
@@ -15,11 +14,7 @@ use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as HttpTest;
 
 /**
- * @category   Zend
- * @package    ZendService\OpenStack\Identity
  * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_Amazon
  */
 class IdentityTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,13 +24,13 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
      * @var Identity
      */
     protected $identity;
-    
+
     protected static $token;
-    
+
     protected static $userId;
-    
+
     protected static $tenantId;
-    
+
     /**
      * setUp
      */
@@ -47,7 +42,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
             'password' => TESTS_ZENDSERVICE_OPENSTACK_PASSWORD,
             'key'      => TESTS_ZENDSERVICE_OPENSTACK_APIKEY,
         );
-        
+
         $http = new HttpClient();
 
         if (!TESTS_ZENDSERVICE_OPENSTACK_ONLINE) {
@@ -65,7 +60,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
             $this->identity->getHttpClient()->getAdapter()->setResponse($this->loadResponse($this->getName()));
         }
     }
-    
+
     /**
      * Utility method for returning a string HTTP response, which is loaded from a file
      *
@@ -88,7 +83,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         return file_exists(__DIR__ . '/_files/' . $name . '.response');
     }
 
- 
+
     public function tearDown()
     {
         $fileResponse = __DIR__ . '/_files/' . $this->getName() . '.response';
@@ -104,7 +99,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
     public function testAuthenticate()
     {
         $result = $this->identity->authenticate($this->options['user'], $this->options['password']);
-        
+
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
         self::$token = $this->identity->getToken();
@@ -114,41 +109,41 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
     public function testAuthenticateByKey()
     {
         $result = $this->identity->authenticateByKey($this->options['user'], $this->options['key']);
-        
+
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
         self::$token = $this->identity->getToken();
         $this->assertTrue(!empty(self::$token));
     }
-    
+
     public function testValidateToken()
     {
         $result = $this->identity->validateToken(self::$token);
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testCheckToken()
     {
         $result = $this->identity->validateToken(self::$token);
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testListEndpointsToken()
     {
         $result = $this->identity->listEndpointsToken(self::$token);
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testListUsers()
     {
         $result = $this->identity->listUsers();
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testAddUser()
     {
         $user = array (
@@ -162,7 +157,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         self::$userId = $result['user']['id'];
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testUpdateUser()
     {
         if (empty(self::$userId)) {
@@ -179,7 +174,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user['username'], $result['user']['username']);
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testDeleteUser()
     {
         if (empty(self::$userId)) {
@@ -189,7 +184,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testListGlobalRoles()
     {
         if (empty(self::$userId)) {
@@ -199,7 +194,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         $this->assertTrue($this->identity->isSuccess());
     }
-    
+
     public function testAddTenant()
     {
         $tenant = array(
@@ -213,7 +208,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tenant['description'], $result['tenant']['description']);
         self::$tenantId = $result['tenant']['id'];
     }
-    
+
     public function testUpdateTenant()
     {
         if (empty(self::$tenantId)) {
@@ -230,7 +225,7 @@ class IdentityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tenant['name'], $result['tenant']['name']);
         $this->assertEquals($tenant['description'], $result['tenant']['description']);
     }
-    
+
     public function testDeleteTenant()
     {
         if (empty(self::$tenantId)) {

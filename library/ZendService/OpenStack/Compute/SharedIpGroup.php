@@ -3,9 +3,8 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendService\OpenStack\Compute;
@@ -18,33 +17,36 @@ class SharedIpGroup
     const ERROR_PARAM_NO_NAME    = 'You must pass the image\'s name in the array (name)';
     const ERROR_PARAM_NO_ID      = 'You must pass the image\'s id in the array (id)';
     const ERROR_PARAM_NO_SERVERS = 'The servers parameter must be an array of Ids';
+
     /**
      * Name of the shared IP group
      *
      * @var string
      */
     protected $name;
+
     /**
      * Id of the shared IP group
      *
      * @var string
      */
     protected $id;
+
     /**
      * Array of servers of the shared IP group
      *
      * @var array
      */
     protected $serversId = array();
+
     /**
      * The service that has created the image object
      *
      * @var ZendService\OpenStack\Servers
      */
     protected $service;
+
     /**
-     * Construct
-     *
      * @param OpenStackServers $service
      * @param array $data
      */
@@ -69,6 +71,7 @@ class SharedIpGroup
             $this->serversId= $data['servers'];
         }
     }
+
     /**
      * Get the name of the shared IP group
      *
@@ -78,6 +81,7 @@ class SharedIpGroup
     {
         return $this->name;
     }
+
     /**
      * Get the id of the shared IP group
      *
@@ -87,6 +91,7 @@ class SharedIpGroup
     {
         return $this->id;
     }
+
     /**
      * Get the server's array of the shared IP group
      *
@@ -94,22 +99,25 @@ class SharedIpGroup
      */
     public function getServersId()
     {
-        if (empty($this->serversId)) {
-            $info= $this->service->getSharedIpGroup($this->id);
-            if (($info!==false)) {
-                $info= $info->toArray();
-                if (isset($info['servers'])) {
-                    $this->serversId= $info['servers'];
-                }
+        if (!empty($this->serversId)) {
+            return $this->serversId;
+        }
+
+        $info = $this->service->getSharedIpGroup($this->id);
+        if (($info !== false)) {
+            $info = $info->toArray();
+            if (isset($info['servers'])) {
+                $this->serversId = $info['servers'];
             }
         }
         return $this->serversId;
     }
+
     /**
      * Get the server
      *
-     * @param integer $id
-     * @return ZendService\OpenStack\Servers\Server|boolean
+     * @param  integer $id
+     * @return OpenStackServers\Server|bool
      */
     public function getServer($id)
     {
@@ -121,19 +129,21 @@ class SharedIpGroup
         }
         return false;
     }
+
     /**
      * Create a server in the shared Ip Group
      *
-     * @param array $data
-     * @param array $metadata
-     * @param array $files
-     * @return ZendService\OpenStack\Servers\Server|boolean
+     * @param  array $data
+     * @param  array $metadata
+     * @param  array $files
+     * @return OpenStackServers\Server|bool
      */
     public function createServer(array $data, $metadata=array(),$files=array())
     {
-        $data['sharedIpGroupId']= (integer) $this->id;
+        $data['sharedIpGroupId'] = (integer) $this->id;
         return $this->service->createServer($data,$metadata,$files);
     }
+
     /**
      * To Array
      *
@@ -144,7 +154,7 @@ class SharedIpGroup
         return array (
             'name'    => $this->name,
             'id'      => $this->id,
-            'servers' => $this->serversId
+            'servers' => $this->serversId,
         );
     }
 }

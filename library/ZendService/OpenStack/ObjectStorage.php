@@ -3,15 +3,15 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   ZendService_OpenStack
  */
+
 namespace ZendService\OpenStack;
 
-use Zend\Http\Client as HttpClient;
-use ZendService\Api\Api;
 use Traversable;
+use ZendService\Api\Api;
+use Zend\Http\Client as HttpClient;
 use Zend\Stdlib\ArrayUtils;
 
 
@@ -48,7 +48,7 @@ class ObjectStorage extends AbstractOpenStack {
             );
         }
         $this->api->resetLastResponse();
-    }   
+    }
 
     /**
      * Authentication
@@ -61,14 +61,15 @@ class ObjectStorage extends AbstractOpenStack {
     protected function auth($username, $password, $key = null)
     {
         $result = $this->api->auth($username, $key);
-        if ($this->api->isSuccess()) {
-            $headers = $this->api->getHttpClient()->getResponse()->getHeaders()->toArray();
-            $this->token = $headers[self::HEADER_AUTHTOKEN];
-            $this->api->setHeaders(array(self::HEADER_AUTHTOKEN => $this->token));
-            $this->api->setUrl($headers[self::HEADER_STORAGEURL]);   
-            return true;
+        if (!$this->api->isSuccess()) {
+            return false;
         }
-        return false;
+
+        $headers = $this->api->getHttpClient()->getResponse()->getHeaders()->toArray();
+        $this->token = $headers[self::HEADER_AUTHTOKEN];
+        $this->api->setHeaders(array(self::HEADER_AUTHTOKEN => $this->token));
+        $this->api->setUrl($headers[self::HEADER_STORAGEURL]);
+        return true;
     }
 
     /**
@@ -92,7 +93,7 @@ class ObjectStorage extends AbstractOpenStack {
             );
         }
         $this->options = $options;
-    }    
+    }
 
     /**
      * List containers
@@ -116,7 +117,8 @@ class ObjectStorage extends AbstractOpenStack {
      * Check the metadata size limit
      *
      * @param  array $metadata
-     * @return boolen
+     * @return bool
+     * @throws Exception\InvalidArgumentException
      */
     protected function checkMetadata($metadata = array())
     {
@@ -208,6 +210,7 @@ class ObjectStorage extends AbstractOpenStack {
      * @param  string $name
      * @param  array $metadata
      * @return boolean
+     * @throws Exception\InvalidArgumentException
      */
     public function createContainer($name, $metadata = array())
     {
