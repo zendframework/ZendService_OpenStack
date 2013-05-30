@@ -17,19 +17,24 @@ use Zend\Stdlib\ArrayUtils;
 
 /**
  * Object Storage OpenStack API
- * 
- * 
+ *  
  * @see http://docs.openstack.org/api/openstack-object-storage/1.0/content/
  */
 class ObjectStorage extends AbstractOpenStack {
     
-    const VERSION           = '1.0';
-    const HEADER_AUTHTOKEN  = 'X-Auth-Token';
-    const HEADER_STORAGEURL = 'X-Storage-Url';
-    
+    const VERSION                    = '1.0';
+    const HEADER_AUTHTOKEN           = 'X-Auth-Token';
+    const HEADER_STORAGEURL          = 'X-Storage-Url';
     const ERROR_EMPTY_CONTAINER_NAME = 'The name of the container cannot be empty';
+    const ERROR_EMPTY_OBJECT_NAME    = 'The name of the object cannot be empty';
 
-
+    /**
+     * Constructor
+     *
+     * @param  array $options
+     * @param  HttpClient $httpClient
+     * @throws Exception\RuntimeException
+     */
     public function __construct(array $options, HttpClient $httpClient = null)
     {
         $this->setOptions($options);
@@ -45,6 +50,14 @@ class ObjectStorage extends AbstractOpenStack {
         $this->api->resetLastResponse();
     }   
 
+    /**
+     * Authentication
+     *
+     * @param  string $username
+     * @param  string $password
+     * @param  string $key
+     * @return boolean
+     */
     protected function auth($username, $password, $key = null)
     {
         $result = $this->api->auth($username, $key);
@@ -58,6 +71,12 @@ class ObjectStorage extends AbstractOpenStack {
         return false;
     }
 
+    /**
+     * Set options for authentication
+     *
+     * @param  array $options
+     * @throws Exception\InvalidArgumentException
+     */
     protected function setOptions(array $options)
     {
         if ($options instanceof Traversable) {
@@ -75,6 +94,12 @@ class ObjectStorage extends AbstractOpenStack {
         $this->options = $options;
     }    
 
+    /**
+     * List containers
+     *
+     * @param  array $options
+     * @return array
+     */
     public function listContainers(array $options = array())
     {
         if (!empty($options)) {
@@ -87,6 +112,12 @@ class ObjectStorage extends AbstractOpenStack {
         return $result;
     }
 
+    /**
+     * Check the metadata size limit
+     *
+     * @param  array $metadata
+     * @return boolen
+     */
     protected function checkMetadata($metadata = array())
     {
          if (!empty($metadata)) {
@@ -113,18 +144,71 @@ class ObjectStorage extends AbstractOpenStack {
         return true;
     }
 
+    /**
+     * Extract metadata information from headers
+     *
+     * @param  array $headers
+     * @param  string $XType (X-Account, X-Container, etc)
+     * @return array
+     */
+    protected function extractMetadata(array $headers, $XType)
+    {
+        $result = array();
+        $size   = strlen($XType);
+        foreach ($headers as $key => $value) {
+            if (substr($key, 0, $size + 5) === $XType . '-Meta') {
+                $result['metadata'][substr($key, $size + 6)] = $value;
+            } elseif (substr($key, 0, $size) === $XType) {
+                $result['account'][substr($key, $size + 1)] = $value;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Get account metadata
+     *
+     * @return array
+     */
     public function getAccountMetadata()
     {
+        $this->api->getAccountMetadata();
+        $headers = $this->api->getResponseHeaders();
+        return $this->extractMetadata($headers, 'X-Account');
     }
 
-    public function setAccountMetadata()
+    /** 
+     * Set the account metadata
+     * It creates or updates the account metadata.
+     *
+     * @param  array $metadata
+     * @return boolean
+     */
+    public function setAccountMetadata(array $metadata)
     {
+        $this->api->setAccountMetadata($metadata);
+        return $this->api->isSuccess();
     }
 
-    public function deleteAccountMetadata()
+    /**
+     * Delete account metadata
+     *
+     * @param  array $metadata to be removed
+     * @return boolean
+     */
+    public function deleteAccountMetadata(array $metadata)
     {
+        $this->api->deleteAccountMetadata($metadata);
+        return $this->api->isSuccess();
     }
 
+    /**
+     * Create a container
+     *
+     * @param  string $name
+     * @param  array $metadata
+     * @return boolean
+     */
     public function createContainer($name, $metadata = array())
     {
         if (empty($name)) {
@@ -137,6 +221,13 @@ class ObjectStorage extends AbstractOpenStack {
         return $this->api->isSuccess();
     }
 
+    /**
+     * Delete a container
+     *
+     * @param  string $name
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
     public function deleteContainer($name)
     {
         if (empty($name)) {
@@ -148,43 +239,252 @@ class ObjectStorage extends AbstractOpenStack {
         return $this->api->isSuccess();
     }
 
-    public function listObjects()
-    {       
+    /**
+     * List of objects of a container
+     *
+     * @param  string $container
+     * @param  array $options
+     * @return array
+     * @throws Exception\InvalidArgumentException
+     */
+    public function listObjects($container, $options= array())
+    {  
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        if (!empty($options)) {
+            $this->api->setQueryParams($options);
+        }
+        $result = $this->api->listObjects($container);
+        if (!empty($options)) {
+            $this->api->setQueryParams();
+        }
+        return $result;
     }
 
-    public function getContainerMetadata()
+    /**
+     * Get Container Metadata
+     *
+     * @param  string $container
+     * @reurn  array
+     * @throws Exception\InvalidArgumentException
+     */
+    public function getContainerMetadata($container)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        $this->api->getContainerMetadata($container);
+        $headers = $this->api->getResponseHeaders();
+        return $this->extractMetadata($headers, 'X-Container');
     }
 
-    public function setContainerMetadata()
+    /**
+     * Set container metadata
+     *
+     * @param  string $container
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
+    public function setContainerMetadata($container, array $metadata)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        $this->api->setContainerMetadata($container, $metadata);
+        return $this->api->isSuccess();
     }
 
-    public function deleteContainerMetadata()
+    /**
+     * Delete container metadata
+     *
+     * @param  string $container
+     * @param  array $metadata
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
+    public function deleteContainerMetadata($container, array $metadata)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        $this->api->deleteContainerMetadata($container, $metadata);
+        return $this->api->isSuccess();
     }
 
-    public function getObject()
+    /**
+     * Get object
+     *
+     * @param  string $container
+     * @param  string $object
+     * @return string
+     * @throws Exception\InvalidArgumentException
+     */
+    public function getObject($container, $object)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        if (empty($object)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME
+            );
+        } 
+        return $this->api->getObject($container, $object);
     }
 
-    public function setObject()
+    /**
+     * Set object
+     *
+     * Store the content in a object. 
+     * You can specify if the object has an expire date (optional parameter)
+     *
+     * @param  string $container
+     * @param  string $object
+     * @param  string $content
+     * @param  array $metadata
+     * @param  string $expire
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
+    public function setObject($container, $object, $content, $metadata = array(), $expire = null)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        if (empty($object)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME
+            );
+        }
+        $this->api->setObject($container, $object, $content, $metadata, $expire);
+        return $this->api->isSuccess();
     }
 
-    public function deleteObject()
+    /**
+     * Delete an object
+     *
+     * @param  string $container
+     * @param  string $object
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
+    public function deleteObject($container, $object)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        if (empty($object)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME
+            );
+        }
+        $this->api->deleteObject($container, $object);
+        return $this->api->isSuccess();
     }
 
-    public function copyObject()
+    /**
+     * Copy object
+     *
+     * @param  string $containerFrom
+     * @param  string $objectFrom
+     * @param  string $containerTo
+     * @param  string $objectTo
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
+    public function copyObject($containerFrom, $objectFrom, $containerTo, $objectTo)
     {
+        if (empty($containerFrom)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME . ' for the source'
+            );
+        }
+        if (empty($objectFrom)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME . ' for the source'
+            );
+        }
+        if (empty($containerTo)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME . ' for the destination'
+            );
+        }
+        if (empty($objectTo)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME . ' for the destination'
+            );
+        }
+        if ($containerFrom === $containerTo && $objectFrom === $objectTo) {
+            throw new Exception\InvalidArgumentException(
+                'You cannot copy an object to itself'
+            );
+        }
+        $this->api->copyObject($containerFrom, $objectFrom, $containerTo, $objectTo);
+        return $this->api->isSuccess();
     }
 
-    public function setObjectMetadata()
+    /**
+     * Set object metadata
+     *
+     * @param  string $container
+     * @param  string $object
+     * @param  array $metadata
+     * @return boolean
+     * @throws Exception\InvalidArgumentException
+     */
+    public function setObjectMetadata($container, $object, array $metadata)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        if (empty($object)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME
+            );
+        }
+        $this->api->setObjectMetadata($container, $object, $metadata);
+        return $this->api->isSuccess();
     }
 
-    public function getObjectMetadata()
+    /**
+     * Get object metadata
+     *
+     * @param  string $container
+     * @param  string $object
+     * @return array
+     * @throws Exception\InvalidArgumentException
+     */
+    public function getObjectMetadata($container, $object)
     {
+        if (empty($container)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_CONTAINER_NAME
+            );
+        }
+        if (empty($object)) {
+            throw new Exception\InvalidArgumentException(
+                self::ERROR_EMPTY_OBJECT_NAME
+            );
+        }
+        $this->api->getObjectMetadata($container, $object);
+        $headers = $this->api->getResponseHeaders();
+        return $this->extractMetadata($headers, 'X-Object');
     }
 }

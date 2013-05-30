@@ -1,0 +1,14 @@
+HTTP/1.1 204 No Content
+Server: nginx/0.8.55
+Date: Wed, 29 May 2013 16:52:01 GMT
+Connection: close
+X-Storage-Token: 11112cdac8c0481111b8d5ce22645b49
+X-Storage-Url: https://test.dfw1.test.com/v1/MossoCloudFS_a036d46c-1111-4eb8-9b7a-9482345987f8
+X-Server-Management-Url: https://servers.api.test.com/v1.0/123456
+X-CDN-Management-Url: https://cdn1.test.com/v1/MossoCloudFS_a036d46c-1111-4eb8-9b7a-9482345987f8
+X-Auth-Token: 583f9230eac048eda8b8d5ce295fcb49
+vary: Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass, X-Auth-User
+Cache-Control: s-maxage=77689
+VIA: 1.0 Repose (Repose/2.3.5)
+Front-End-Https: on
+

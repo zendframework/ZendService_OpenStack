@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+X-Timestamp: 1365432969.88327
+Content-Type: application/json; charset=utf-8
+Date: Thu, 30 May 2013 09:09:27 GMT
+X-Account-Meta-Temp-Url-Key: e90780e61cd795014f43ef19ae2f3cf3
+X-Account-Container-Count: 1
+Accept-Ranges: bytes
+X-Trans-Id: txffda27a0f82f4ecba008a8f939195f27
+Connection: close
+X-Account-Object-Count: 0
+Content-Length: 45
+X-Account-Bytes-Used: 0
+
+[{"count": 0, "bytes": 0, "name": "zf2test"}]
