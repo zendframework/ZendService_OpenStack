@@ -1,6 +1,10 @@
 ZendService\OpenStack
 =====================
 
+> ## Repository abandoned 2019-12-05
+>
+> This repository is no longer maintained.
+
 Provides a simple PHP library for the last version of the [OpenStack API](http://docs.openstack.org/api/api-specs.html).
 The goal of this component is to simplify the usage of the OpenStack API for PHP developers, providing simple OO interfaces.
 
@@ -36,4 +40,3 @@ You can install using:
 curl -s https://getcomposer.org/installer | php
 php composer.phar install
 ```
-
