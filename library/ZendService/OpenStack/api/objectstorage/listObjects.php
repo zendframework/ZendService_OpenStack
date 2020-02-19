@@ -15,6 +15,6 @@ return array(
     ),
     'method' => 'GET',
     'response' => array(
-        'valid_codes' => array('204')
+        'valid_codes' => array('200', '204')
     )
 );
